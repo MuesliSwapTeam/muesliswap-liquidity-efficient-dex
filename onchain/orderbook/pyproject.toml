@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "muesliswap-orderbook-contracts"
+version = "0.1.0"
+description = "MuesliSwap Orderbook Contracts written in OpShin"
+authors = ["MuesliSwap Team <contact@muesliswap.com>"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = ">=3.10, <3.11"
+opshin = "0.21.1"
+click = "^8.1.3"
+pycardano = { git = "https://github.com/OpShin/pycardano.git", branch = "running_fixes" }
+fire = "^0.5.0"
+ogmios = { git = "https://gitlab.com/nielstron/ogmios-python.git", branch = "running_fixes" }
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.2"
+hypothesis = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
