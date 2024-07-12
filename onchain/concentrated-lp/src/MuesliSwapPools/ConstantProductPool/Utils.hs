@@ -75,7 +75,7 @@ calApproxSqrt x prec = fromJust $ (calSqrtFloor ((numerator x) * f)) `ratio` (ca
     numLen :: Integer -> Integer
     numLen i
       | i == 0 = 0
-      | otherwise = 1 + (numLen $ i `divide` 10)
+      | otherwise = 1 + (numLen $ i `quotient` 10)
 
 {-# INLINEABLE calFloor #-}
 calFloor :: Rational -> Integer
