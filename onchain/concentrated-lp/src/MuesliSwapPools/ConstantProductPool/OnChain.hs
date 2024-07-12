@@ -104,7 +104,7 @@ mkPoolValidator pp datum redeemer ctx = case redeemer of
 -- 3.  Factory NFT token in input have quantity = 1
 -- 4.  Factory NFT token in output have quantity = 1
 -- 5.  Validate that no asset will be minted in this action
--- 6.  Concetrated constant product formula must be satisfied
+-- 6.  Concentrated constant product formula must be satisfied
 -- 7.  Pool datum must remain unchanged
 -- 8.  Swapper license token must be present and not be expired
 -- 9.  No inputs from batcher contract must be spent in this transaction
