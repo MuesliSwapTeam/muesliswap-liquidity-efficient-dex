@@ -24,10 +24,9 @@ data OrderStep
       { wMinimumCoinA :: Integer,
         wMinimumCoinB :: Integer
       }
-  | OneSideDeposit
   deriving stock (Haskell.Show)
 
-PlutusTx.makeIsDataIndexed ''OrderStep [('Deposit, 0), ('Withdraw, 1), ('OneSideDeposit, 2)]
+PlutusTx.makeIsDataIndexed ''OrderStep [('Deposit, 0), ('Withdraw, 1)]
 
 data OrderDatum = OrderDatum
   { odSender :: Address,
