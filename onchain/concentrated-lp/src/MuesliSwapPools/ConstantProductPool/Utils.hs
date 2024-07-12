@@ -48,6 +48,22 @@ calSqrt x
         then go i2 ((x `divide` i2 + i2) `divide` 2)
         else i1
 
+{-# INLINEABLE calSqrtFloor #-}
+calSqrtFloor :: Integer -> Integer
+calSqrtFloor x
+  | sqrt * sqrt > x = sqrt - 1
+  | otherwise = sqrt
+  where
+    sqrt = calSqrt x
+
+{-# INLINEABLE calSqrtCeil #-}
+calSqrtCeil :: Integer -> Integer
+calSqrtCeil x
+  | sqrt * sqrt < x = sqrt + 1
+  | otherwise = sqrt
+  where
+    sqrt = calSqrt x
+
 {-# INLINEABLE fromJust #-}
 fromJust :: Maybe a -> a
 fromJust (Just x) = x
@@ -61,7 +77,7 @@ calPow a b
 
 {-# INLINEABLE calApproxSqrt #-}
 calApproxSqrt :: Rational -> Integer -> Rational
-calApproxSqrt x prec = fromJust $ (calSqrt ((numerator x) * f)) `ratio` (calSqrt ((denominator x) * f))
+calApproxSqrt x prec = fromJust $ (calSqrtFloor ((numerator x) * f)) `ratio` (calSqrtCeil ((denominator x) * f))
   where
     f = calPow 10 $ max 0 $ prec - min (numLen $ numerator x) (numLen $ denominator x)
     numLen :: Integer -> Integer
