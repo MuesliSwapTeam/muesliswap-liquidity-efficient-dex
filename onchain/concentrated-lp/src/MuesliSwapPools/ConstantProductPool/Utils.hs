@@ -33,9 +33,9 @@ import PlutusTx.Ratio (properFraction, numerator, denominator, ratio, recip)
 minimumLiquidity :: Integer
 minimumLiquidity = 1000
 
-{-# INLINEABLE calSqrt #-}
-calSqrt :: Integer -> Integer
-calSqrt x
+{-# INLINEABLE calSqrtFloor #-}
+calSqrtFloor :: Integer -> Integer
+calSqrtFloor x
   | x < 0 = error ()
   | x == 0 = 0
   | x == 1 = 1
@@ -48,21 +48,13 @@ calSqrt x
         then go i2 ((x `divide` i2 + i2) `divide` 2)
         else i1
 
-{-# INLINEABLE calSqrtFloor #-}
-calSqrtFloor :: Integer -> Integer
-calSqrtFloor x
-  | sqrt * sqrt > x = sqrt - 1
-  | otherwise = sqrt
-  where
-    sqrt = calSqrt x
-
 {-# INLINEABLE calSqrtCeil #-}
 calSqrtCeil :: Integer -> Integer
 calSqrtCeil x
   | sqrt * sqrt < x = sqrt + 1
   | otherwise = sqrt
   where
-    sqrt = calSqrt x
+    sqrt = calSqrtFloor x
 
 {-# INLINEABLE fromJust #-}
 fromJust :: Maybe a -> a
