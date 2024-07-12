@@ -31,7 +31,7 @@ import PlutusTx.Ratio (properFraction, numerator, denominator, ratio, recip)
 
 {-# INLINEABLE minimumLiquidity #-}
 minimumLiquidity :: Integer
-minimumLiquidity = 10
+minimumLiquidity = 1000
 
 {-# INLINEABLE calSqrt #-}
 calSqrt :: Integer -> Integer
@@ -88,7 +88,7 @@ calculateInitialLiquidity amountA amountB pASqrt pBSqrt precompFrac prec =
     amB = fromInteger amountB
     providedL = calculateLiquidity amA amB pASqrt pBSqrt precompFrac prec
   in if precompFrac == (fromInteger 1) - (pASqrt * (recip pBSqrt))
-    && (fromInteger 0) <= pASqrt
+    && (fromInteger 0) < pASqrt
     && pASqrt < pBSqrt then
       calFloor providedL
     else
