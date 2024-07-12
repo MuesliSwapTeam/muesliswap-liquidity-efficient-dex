@@ -229,12 +229,7 @@ validateApplyPool
   datum@PoolDatum
     { pdCoinA = coinA,
       pdCoinB = coinB,
-      pdTotalLiquidity = totalLiquidityIn,
-      pdSwapFee = swapFee,
-      pdPriceASqrt = priceASqrt,
-      pdPriceBSqrt = priceBSqrt,
-      pdPrecompFrac = precompFrac,
-      pdApproxSqrtPrec = approxSqrtPrec
+      pdTotalLiquidity = totalLiquidityIn
     }
   ctx
   batcherAddress
@@ -332,13 +327,7 @@ validateApplyPool
               newState = applyStep' inputValue orderDatum state o
            in applyOrders ins outs newState
 
-        untamperedDatum = coinA == pdCoinA outputPoolDatum
-          && coinB == pdCoinB outputPoolDatum
-          && swapFee == pdSwapFee outputPoolDatum
-          && priceASqrt == pdPriceASqrt outputPoolDatum
-          && priceBSqrt == pdPriceBSqrt outputPoolDatum
-          && approxSqrtPrec == pdApproxSqrtPrec outputPoolDatum
-          && precompFrac == pdPrecompFrac outputPoolDatum
+        untamperedDatum = datum == outputPoolDatum { pdTotalLiquidity = totalLiquidityOut }
 
      in validPoolValue -- 1.
           && batcherPubKeyHash `elem` signatories -- 2.
