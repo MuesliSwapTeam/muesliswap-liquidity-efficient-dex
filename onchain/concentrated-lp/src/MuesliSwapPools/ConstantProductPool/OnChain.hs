@@ -233,7 +233,8 @@ validateApplyPool
       pdSwapFee = swapFee,
       pdPriceASqrt = priceASqrt,
       pdPriceBSqrt = priceBSqrt,
-      pdPrecompFrac = precompFrac
+      pdPrecompFrac = precompFrac,
+      pdApproxSqrtPrec = approxSqrtPrec
     }
   ctx
   batcherAddress
@@ -336,6 +337,7 @@ validateApplyPool
           && swapFee == pdSwapFee outputPoolDatum
           && priceASqrt == pdPriceASqrt outputPoolDatum
           && priceBSqrt == pdPriceBSqrt outputPoolDatum
+          && approxSqrtPrec == pdApproxSqrtPrec outputPoolDatum
           && precompFrac == pdPrecompFrac outputPoolDatum
 
      in validPoolValue -- 1.
