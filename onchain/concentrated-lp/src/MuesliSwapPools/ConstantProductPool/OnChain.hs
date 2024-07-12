@@ -327,7 +327,7 @@ validateApplyPool
               newState = applyStep' inputValue orderDatum state o
            in applyOrders ins outs newState
 
-        untamperedDatum = datum == outputPoolDatum { pdTotalLiquidity = totalLiquidityOut }
+        untamperedDatum = datum { pdTotalLiquidity = totalLiquidityOut } == outputPoolDatum
 
      in validPoolValue -- 1.
           && batcherPubKeyHash `elem` signatories -- 2.
