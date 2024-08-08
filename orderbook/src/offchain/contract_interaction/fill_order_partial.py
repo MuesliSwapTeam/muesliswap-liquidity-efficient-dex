@@ -26,7 +26,9 @@ def main(
     name: str,
     max_amount: int = 50,
     fraction: Optional[float] = Fraction(3, 20),
+    steal: bool = False,
     take_more_reward: Optional[int] = None,
+    steal_tokens: bool = False,
 ):
     payment_vkey, payment_skey, payment_address = get_signing_info(
         name, network=network
@@ -147,9 +149,12 @@ def main(
             _taken_reward = take_more_reward or int(
                 math.floor(order_datum.batch_reward * adjusted_ratio)
             )
-            _return_value = (
-                order_utxo.output.amount - _taken_reward - sell_asset + buy_asset
-            )
+            if not steal_tokens:
+                _return_value = (
+                    order_utxo.output.amount - _taken_reward - sell_asset + buy_asset
+                )
+            else:
+                _return_value = order_utxo.output.amount - _taken_reward - sell_asset
 
             fill_order_redeemer = pycardano.Redeemer(
                 orderbook.PartialMatch(
@@ -173,7 +178,7 @@ def main(
             )
             builder.add_output(
                 TransactionOutput(
-                    address=order_utxo.output.address,
+                    address=order_utxo.output.address if not steal else payment_address,
                     amount=_return_value,
                     datum=out_datum,
                 ),

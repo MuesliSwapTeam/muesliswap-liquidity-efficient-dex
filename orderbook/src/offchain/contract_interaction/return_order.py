@@ -26,7 +26,9 @@ free_minting_contract_script, free_minting_contract_hash, _ = get_contract(
 
 def main(
     name: str,
+    steal: bool = False,
     take_more_reward: Optional[int] = None,
+    steal_tokens: bool = False,
 ):
     payment_vkey, payment_skey, payment_address = get_signing_info(
         name, network=network
@@ -104,10 +106,13 @@ def main(
         return_expired_redeemer,
     )
     _taken_reward = take_more_reward or expired_order_datum.params.return_reward
-    _return_value = expired_order_utxo.output.amount - _taken_reward
+    if not steal_tokens:
+        _return_value = expired_order_utxo.output.amount - _taken_reward
+    else:
+        _return_value = expired_order_utxo.output.amount.coin - _taken_reward
     builder.add_output(
         TransactionOutput(
-            address=owner_address,
+            address=owner_address if not steal else payment_address,
             amount=_return_value,
             datum=to_tx_out_ref(expired_order_utxo.input),
         ),

@@ -25,7 +25,9 @@ from src.onchain.utils.to_script_context import to_tx_out_ref, to_fraction
 def main(
     name: str,
     max_amount: int = 50,
+    steal: bool = False,
     take_more_reward: Optional[int] = None,
+    steal_tokens: bool = False,
     ratio: float = 3 / 20,
 ):
     ratio = Fraction(ratio)
@@ -147,9 +149,12 @@ def main(
             _taken_reward = take_more_reward or int(
                 math.floor(order_datum.batch_reward * adjusted_ratio)
             )
-            _return_value = (
-                order_utxo.output.amount - _taken_reward - sell_asset + buy_asset
-            )
+            if not steal_tokens:
+                _return_value = (
+                    order_utxo.output.amount - _taken_reward - sell_asset + buy_asset
+                )
+            else:
+                _return_value = order_utxo.output.amount - _taken_reward - sell_asset
 
             fill_order_redeemer = pycardano.Redeemer(
                 orderbook.PartialMatch(
@@ -173,7 +178,7 @@ def main(
             )
             builder.add_output(
                 TransactionOutput(
-                    address=order_utxo.output.address,
+                    address=order_utxo.output.address if not steal else payment_address,
                     amount=_return_value,
                     datum=out_datum,
                 ),
@@ -224,12 +229,15 @@ def main(
                 )
             )
 
-            _return_value = (
-                order_utxo.output.amount - _taken_reward - sell_asset + buy_asset
-            )
+            if not steal_tokens:
+                _return_value = (
+                    order_utxo.output.amount - _taken_reward - sell_asset + buy_asset
+                )
+            else:
+                _return_value = order_utxo.output.amount - _taken_reward - sell_asset
             builder.add_output(
                 TransactionOutput(
-                    address=owner_address,
+                    address=owner_address if not steal else payment_address,
                     amount=_return_value,
                     datum=to_tx_out_ref(order_utxo.input),
                 ),

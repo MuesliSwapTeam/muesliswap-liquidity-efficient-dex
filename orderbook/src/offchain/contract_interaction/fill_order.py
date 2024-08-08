@@ -23,7 +23,9 @@ from src.onchain.utils.to_script_context import to_tx_out_ref
 def main(
     name: str,
     max_amount: int = 50,
+    steal: bool = False,
     take_more_reward: Optional[int] = None,
+    steal_tokens: bool = False,
 ) -> int:
     _, payment_skey, payment_address = get_signing_info(name, network=network)
     orderbook_v3_script, _, orderbook_v3_address = get_contract(
@@ -144,12 +146,15 @@ def main(
                 )
             )
 
-            _return_value = (
-                order_utxo.output.amount - _taken_reward - sell_asset + buy_asset
-            )
+            if not steal_tokens:
+                _return_value = (
+                    order_utxo.output.amount - _taken_reward - sell_asset + buy_asset
+                )
+            else:
+                _return_value = order_utxo.output.amount - _taken_reward - sell_asset
             builder.add_output(
                 TransactionOutput(
-                    address=owner_address,
+                    address=owner_address if not steal else payment_address,
                     amount=_return_value,
                     datum=to_tx_out_ref(order_utxo.input),
                 ),
