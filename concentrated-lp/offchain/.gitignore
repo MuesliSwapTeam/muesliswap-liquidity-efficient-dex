@@ -1,0 +1,13 @@
+secret.py
+secret.sh
+.idea/
+__pycache__/
+*.skey
+*.sqlite
+venv
+.kupo/*
+.txfiles/*
+data/
+lp_token_redeemer.txt
+batch_redeemer.txt
+additional_patterns.sh
