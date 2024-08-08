@@ -11,9 +11,9 @@ New:
 """
 
 
-from src.contracts.custom_fract import *
-from src.contracts.utils.ext_values import *
-from src.contracts.utils.ext_interval import *
+from src.onchain.contracts.custom_fract import *
+from src.onchain.contracts.utils.ext_values import *
+from src.onchain.contracts.utils.ext_interval import *
 
 
 @dataclass()
@@ -248,7 +248,7 @@ def withdrawal_present(tx_info: TxInfo, own_staking_hash: StakingHash) -> bool:
 
 
 # build with
-# $ opshin build spending src/on_chain/orderbook/opshin_orderbook_v3.py '{"bytes": "..."}'
+# $ opshin build spending src/on_chain/orderbook/orderbook.py '{"bytes": "..."}'
 def validator(
     withdrawal_validator: StakingHash,
     order: Order,

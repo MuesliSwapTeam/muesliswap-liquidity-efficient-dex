@@ -1,6 +1,6 @@
 from hypothesis import given, strategies as st
 
-from src.contracts.utils.ext_interval import *
+from ..src.onchain.contracts.utils.ext_interval import *
 
 
 @given(

@@ -6,8 +6,8 @@ from typing import Union
 
 from opshin.ledger.api_v2 import StakingHash, ScriptCredential
 
-from src.contracts import orderbook, license_check, free_mint
-from src.utils.contracts import get_contract
+from src.onchain.contracts import orderbook, license_check, free_mint
+from src.onchain.utils.contracts import get_contract
 
 
 def build_compressed(

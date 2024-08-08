@@ -2,9 +2,9 @@ from pathlib import Path
 
 from pycardano import PaymentVerificationKey, PaymentSigningKey, Address, Network
 
-from src.utils.network import network
+from src.onchain.utils.network import network
 
-keys_dir = Path(__file__).parent.parent.parent.joinpath("keys")
+keys_dir = Path(__file__).parent.parent.parent.parent.joinpath("keys")
 
 
 def get_address(name) -> Address:

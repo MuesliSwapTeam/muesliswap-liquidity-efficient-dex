@@ -5,8 +5,8 @@ Checks that a license token is spent in the transaction and still valid.
 """
 
 
-from src.contracts.custom_fract import *
-from src.contracts.utils.ext_interval import *
+from src.onchain.contracts.custom_fract import *
+from src.onchain.contracts.utils.ext_interval import *
 
 
 def check_license(

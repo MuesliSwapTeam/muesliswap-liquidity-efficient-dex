@@ -2,3 +2,5 @@
 .hypothesis
 __pycache__
 *.lock
+tmp.cbor
+*.skey

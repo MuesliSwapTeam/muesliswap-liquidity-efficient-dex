@@ -4,19 +4,16 @@ from typing import Optional
 
 import cbor2
 from pycardano import (
-    PaymentVerificationKey,
-    PaymentSigningKey,
     Address,
-    Network,
     PlutusV2Script,
     plutus_script_hash,
     ChainContext,
     PlutusV1Script,
 )
 
-from src.utils import network, get_address
+from src.onchain.utils import network
 
-build_dir = Path(__file__).parent.parent.parent.joinpath("build")
+build_dir = Path(__file__).parent.parent.parent.parent.joinpath("build")
 
 
 def module_name(module):

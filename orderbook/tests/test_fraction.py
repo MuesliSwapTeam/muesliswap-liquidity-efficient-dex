@@ -4,8 +4,8 @@ import hypothesis
 from hypothesis import strategies as hst
 
 from opshin.std.fractions import Fraction
-from src.contracts.custom_fract import *
-from src.contracts.utils.ext_fract import *
+from ..src.onchain.contracts.custom_fract import *
+from ..src.onchain.contracts.utils.ext_fract import *
 import fractions
 
 non_zero_int = hst.integers().filter(lambda x: x != 0)
