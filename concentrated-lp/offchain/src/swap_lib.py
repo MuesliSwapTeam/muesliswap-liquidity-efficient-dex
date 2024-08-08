@@ -87,7 +87,7 @@ def build_swap_tx(
         MIN_ADA_TRANSFER + new_order.fee
     )
     metadata[str(METADATA_ALLOW_PARTIAL_KEY)] = "1"
-    metadata_file = TX_FILES_DIR + "/metadata_match_" + str(uid) + ".json"
+    metadata_file = TX_FILES_DIR / f"metadata_match_{uid}.json"
     with open(metadata_file, "w") as mfp:
         json.dump(metadata, mfp)
 

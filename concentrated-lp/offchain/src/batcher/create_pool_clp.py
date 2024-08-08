@@ -144,7 +144,7 @@ def create_pool(
 
     # generate pool datum
     pool_datum = pool_datum_content_clp(pool)
-    pool_datum_file = TX_FILES_DIR + "/datum_" + str(uid) + "_new_pool.txt"
+    pool_datum_file = TX_FILES_DIR / f"datum_{uid}_new_pool.txt"
     if not pool_datum_file.exists():
         with open(pool_datum_file, "w") as pool_datum_file_fp:
             pool_datum_file_fp.write(pool_datum)
@@ -156,7 +156,7 @@ def create_pool(
         datum_embed_file=pool_datum_file,
     )
     mint_factory_redeemer = lp_lib.FACTORY_REDEEMER_FILE_CONTENT % license_index
-    mint_factory_redeemer_file = TX_FILES_DIR + "/redeemer_" + str(uid) + "_factory.txt"
+    mint_factory_redeemer_file = TX_FILES_DIR / f"redeemer_{uid}_factory.txt"
     if not mint_factory_redeemer_file.exists():
         with open(mint_factory_redeemer_file, "w") as mint_factory_redeemer_file_fp:
             mint_factory_redeemer_file_fp.write(mint_factory_redeemer)
@@ -181,7 +181,7 @@ def create_pool(
         ref_utxo.tx_hash,
         ref_utxo.index,
     )
-    mint_nft_redeemer_file = TX_FILES_DIR + "/redeemer_" + str(uid) + "_nft.txt"
+    mint_nft_redeemer_file = TX_FILES_DIR / f"redeemer_{uid}_nft.txt"
     if not mint_nft_redeemer_file.exists():
         with open(mint_nft_redeemer_file, "w") as mint_nft_redeemer_file_fp:
             mint_nft_redeemer_file_fp.write(mint_nft_redeemer)

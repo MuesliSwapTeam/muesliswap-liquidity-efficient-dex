@@ -96,7 +96,7 @@ def mint(wallet: ShelleyAddress, signing_key: Path, dest: ShelleyAddress, amount
     )
     metadata = copy.deepcopy(METADATA_MINT_FILE_CONTENT)
     metadata["674"]["msg"].append(f"Valid until {LICENSE_VALIDITY.isoformat()}")
-    metadata_file = TX_FILES_DIR + "/metadata_mint_" + str(tokenname) + ".json"
+    metadata_file = TX_FILES_DIR / f"metadata_mint_{tokenname}.json"
     with open(metadata_file, "w") as mfp:
         json.dump(metadata, mfp)
     wallet_skeyfile = clusterlib.TxFiles(
