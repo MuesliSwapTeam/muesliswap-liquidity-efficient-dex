@@ -9,6 +9,7 @@ from src.util import *
 
 from .. import order_lib as ql
 from ..order_lib import Order, BuyOrder, SellOrder
+from ..config import SHORT_SLEEP, LONG_SLEEP
 
 # logger setup
 _LOGGER = logging.getLogger(__name__)
@@ -128,11 +129,11 @@ def main():
     while True:
         try:
             create_data()
-            time.sleep(2)
+            time.sleep(SHORT_SLEEP)
         except KeyboardInterrupt:
             exit()
         except Exception:
-            time.sleep(20)
+            time.sleep(LONG_SLEEP)
 
 
 def open_orders() -> Tuple[List[Order], List[Order]]:

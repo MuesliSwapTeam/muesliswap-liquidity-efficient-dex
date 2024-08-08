@@ -7,6 +7,7 @@ import pickle
 from src.cli_lib import CL
 from .. import lp_lib
 from ..util import *
+from ..config import SHORT_SLEEP, LONG_SLEEP
 
 # logger setup
 _LOGGER = logging.getLogger(__name__)
@@ -89,11 +90,11 @@ def main():
     while True:
         try:
             create_data()
-            time.sleep(2)
+            time.sleep(SHORT_SLEEP)
         except KeyboardInterrupt:
             exit()
         except Exception:
-            time.sleep(20)
+            time.sleep(LONG_SLEEP)
 
 
 def open_pools() -> List[lp_lib.Pool]:

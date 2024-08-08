@@ -11,6 +11,7 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 import cardano_python_utils.util
+from ..config import SHORT_SLEEP
 from .cli_lib import valid_license
 from .mm_lib import *
 from .querier import querier, pool_querier
@@ -182,7 +183,7 @@ def schedule_observer(event):
     observer.start()
     while True:
         try:
-            time.sleep(1)
+            time.sleep(SHORT_SLEEP)
         except KeyboardInterrupt:
             observer.stop()
             observer.join()

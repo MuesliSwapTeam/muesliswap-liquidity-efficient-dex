@@ -13,6 +13,7 @@ from time import sleep
 from .. import cli_lib, lp_lib
 from cardano_python_utils.clusterfuck import all_utxodata
 from ..util import *
+from ...config import SHORT_SLEEP
 
 from cardano_python_utils import clusterfuck, minutxo
 from cardano_python_utils.util import load_wallet
@@ -322,7 +323,7 @@ def main(
             return
         except Exception as e:
             print(e)
-        sleep(2)
+        sleep(SHORT_SLEEP)
 
 
 if __name__ == "__main__":

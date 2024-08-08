@@ -4,10 +4,7 @@ from collections import defaultdict
 import random
 from cardano_clusterlib import clusterlib
 
-from typing import Optional
-
 from math import floor
-import argparse
 import logging
 
 
@@ -18,7 +15,6 @@ from cardano_python_utils.classes import (
     Token,
     LOVELACE,
     Asset,
-    ShelleyAddress,
 )
 from cardano_python_utils.pools.muesliv2_lib import (
     ORDERBOOK_CONTRACT_V2,

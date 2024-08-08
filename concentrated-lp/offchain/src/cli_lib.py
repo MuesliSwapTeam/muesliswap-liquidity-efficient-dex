@@ -30,6 +30,7 @@ from .util import TxO, NETWORK, KUPO_FALLBACK_URL
 from secret import KUPO_URL, MAINNET, MEMPOOL_SERVER
 import secret
 import logging
+from .config import SHORT_SLEEP
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -60,7 +61,7 @@ while CL is None:
         )
     except Exception:
         logging.warning("Could not connect to cardano-node, retrying in 5 seconds...")
-        time.sleep(5)
+        time.sleep(SHORT_SLEEP)
 
 if MEMPOOL_SERVER is not None:
     MEMPOOL_CLIENT = utxos.MempoolClient(MEMPOOL_SERVER)
