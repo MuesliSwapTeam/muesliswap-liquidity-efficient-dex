@@ -18,6 +18,6 @@ jobs:
 
       - name: Run smart contract tests
         run: |
-          cd onchain/orderbook
+          cd orderbook/
           poetry install
           poetry run pytest tests
