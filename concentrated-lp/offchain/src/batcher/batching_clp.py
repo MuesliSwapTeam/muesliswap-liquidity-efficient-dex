@@ -266,6 +266,8 @@ class BatchingObserver(ObserveOrderData):
         # walk through all orders and try to process them
         for pools, orders in zip(all_pools, all_orders):
             for pool in pools:
+                if not orders:
+                    break
                 max_batched = 1
                 if len(collaterals) == 0 or len(batching_licenses) == 0:
                     _LOGGER.error("No collaterals or licenses anymore at address!")
