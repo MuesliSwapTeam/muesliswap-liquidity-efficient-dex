@@ -116,7 +116,7 @@ def place_orders(
             orderbook.Token(buy_token[0].payload, buy_token[1].payload),
             orderbook.Token(sell_token[0].payload, sell_token[1].payload),
             1,
-            orderbook.FinitePOSIXTime(int(datetime.datetime.now().timestamp())),
+            orderbook.FinitePOSIXTime(int(datetime.datetime.now().timestamp() * 1000)),
             return_reward,
             min_utxo,
         )

@@ -66,7 +66,7 @@ def main(
             utxo.output.amount.multi_asset[free_minting_contract_hash].keys()
         )[0]
         license_expiry = int.from_bytes(license_name.payload, "big")
-        if license_expiry < datetime.datetime.now().timestamp():
+        if license_expiry < datetime.datetime.now().timestamp() * 1000:
             continue
         valid_license_utxo = utxo
         break
