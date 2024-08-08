@@ -3,6 +3,7 @@
 import math
 import random
 import argparse
+from operator import itemgetter
 
 from src.batch_lib import (
     generate_argparser,
@@ -256,7 +257,7 @@ class BatchingObserver(ObserveOrderData):
             [p for p in all_pools if p.utxo.owner in lp_lib.POOL_CONTRACT_CLP],
         )
         all_orders = [
-            sorted(x, key=lambda o: (o.utxo.tx_hash, o.utxo.index))
+            sorted(x, key=itemgetter('utxo.tx_hash', 'utxo.index'))
             for x in lp_lib.fetch_batching_orders(all_pools)
         ]
         collaterals = self.collaterals
