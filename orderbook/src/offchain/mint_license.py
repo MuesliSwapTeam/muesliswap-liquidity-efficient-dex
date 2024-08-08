@@ -54,7 +54,7 @@ def mint_license(
     # Get payment address
     payment_address = get_address(name)
 
-    token_name = license_expiry.to_bytes(8, "big")
+    token_name = (license_expiry * 1000).to_bytes(8, "big")
 
     # Build the transaction
     builder = TransactionBuilder(context)
