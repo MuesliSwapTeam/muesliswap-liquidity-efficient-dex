@@ -22,7 +22,9 @@ REDEEMER = Bech32Addr(
 )
 
 
-def process_batches(pool, orders, max_batch=1):
+def process_batches(
+    pool: lp_lib.Pool, orders: List[lp_lib.BatchingOrder], max_batch: int = 1
+):
     redeem: Dict[
         Tuple[ShelleyAddress, lp_lib.BatchingOrder], Dict[Token, int]
     ] = defaultdict(lambda: defaultdict(int))

@@ -60,7 +60,18 @@ MIN_SWAP_SIZE = 1500000
 MAX_GAIN = 1_000_000
 
 
-def swap(buy, sell, wallet_address, pool, max_matched):
+def swap(
+    buy: list[Order],
+    sell: list[Order],
+    wallet_address: ShelleyAddress,
+    pool: lp_lib.ConcentratedPool,
+    max_matched: int,
+) -> tuple[
+    dict[tuple[ShelleyAddress, Optional[Order]], dict[Token, int]],
+    dict[Order, Fraction | int],
+    Order | None,
+    lp_lib.Pool,
+]:
     # sort by closer to pool price
     placed = [o for o in buy + sell if o.sell.amount != 0 and o.buy.amount != 0]
     placed = sorted(
@@ -146,7 +157,11 @@ def swap(buy, sell, wallet_address, pool, max_matched):
 
 
 class SwapBatchObserver(ObserveOrderData):
-    def __init__(self, cli_args, exclude):
+    def __init__(
+        self,
+        cli_args: argparse.Namespace,
+        exclude: set[tuple[Token, Token]] = frozenset(),
+    ):
         super(SwapBatchObserver, self).__init__(
             cli_args,
             [mm_lib.LICENSE_NFT_POLICYID, swap_lib.SWAPPING_LICENSE_NFT_POLICYID_CLP],

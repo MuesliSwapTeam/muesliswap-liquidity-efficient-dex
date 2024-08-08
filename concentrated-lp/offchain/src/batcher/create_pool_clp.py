@@ -1,5 +1,4 @@
 from pathlib import Path
-import random
 
 import decimal
 import uuid
@@ -46,7 +45,14 @@ from ..lp_lib import (
 )
 
 
-def calc_initial_lq_concentrated(asset_a, asset_b, pASqrt, pBSqrt, precomp_frac, prec):
+def calc_initial_lq_concentrated(
+    asset_a: Asset,
+    asset_b: Asset,
+    pASqrt: Fraction,
+    pBSqrt: Fraction,
+    precomp_frac: Fraction,
+    prec: int,
+) -> int:
     L = lp_lib.cal_liquidity_concentrated(
         asset_a.amount, asset_b.amount, pASqrt, pBSqrt, precomp_frac, prec
     )
@@ -54,7 +60,7 @@ def calc_initial_lq_concentrated(asset_a, asset_b, pASqrt, pBSqrt, precomp_frac,
     return lp_lib.cal_floor(L)
 
 
-def approximate_sqrt_as_frac(x, eps):
+def approximate_sqrt_as_frac(x: float, eps: float) -> Fraction:
     i = 0
     true_sqrt = math.sqrt(x)
     if true_sqrt.is_integer():
@@ -69,15 +75,15 @@ def approximate_sqrt_as_frac(x, eps):
 
 
 def create_pool(
-    wallet,
-    signing_key,
-    dest,
-    ref_utxo,
-    collaterals,
-    creator_license,
-    p_a,
-    p_b,
-    prec,
+    wallet: ShelleyAddress,
+    signing_key: Path,
+    dest: ShelleyAddress,
+    ref_utxo: TxO,
+    collaterals: List[TxO],
+    creator_license: TxO,
+    p_a: float,
+    p_b: float,
+    prec: int,
 ):
     # MISC setup
     uid = uuid.uuid4()
@@ -210,6 +216,38 @@ def create_pool(
             pool_contract,
             a.amount,
             a.token.to_cardano_cli(),
+            datum_embed_file=pool_datum_file,
+        )
+        for a in (asset_a, asset_b)  # , Asset(MIN_POOL_ATTACHED_LVL, LOVELACE))
+    ]
+    if asset_b.token != LOVELACE and asset_a.token != LOVELACE:
+        min_attached = (
+            minutxo.min_utxo_ada((LOVELACE, asset_a.token, asset_b.token), True)
+            + 200000
+        )
+        txouts_assets.append(
+            clusterlib.TxOut(
+                pool_contract,
+                min_attached,
+                clusterlib.DEFAULT_COIN,
+                datum_embed_file=pool_datum_file,
+            )
+        )
+    # send some ada with the lp tokens
+    txout_lp_attachment = clusterlib.TxOut(
+        dest.bech32, MIN_POOL_ATTACHED_LVL, LOVELACE.to_cardano_cli()
+    )
+    # send back the creator license
+    tx_out_creator = [
+        clusterlib.TxOut(
+            wallet.bech32,
+            creator_license.amount + 100000,
+        )
+    ] + [
+        clusterlib.TxOut(
+            wallet.bech32,
+            a.amount,
+            a.token.to_cardano_cli(),
         )
         for a in creator_license.assets
     ]
@@ -244,7 +282,12 @@ def create_pool(
     submit_ext(plutus_tx_signed, BLOCKFROST)
 
 
-def main(signing_key, p_a, p_b, prec):
+def main(
+    signing_key: Path,
+    p_a: float,
+    p_b: float,
+    prec: int,
+):
     _, _, wallet_addr = load_wallet(signing_key)
     wallet = ShelleyAddress.from_bech32(wallet_addr.to_primitive())
     while True:
