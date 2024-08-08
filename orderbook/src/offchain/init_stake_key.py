@@ -32,6 +32,11 @@ from src.onchain.utils.contracts import get_contract
 def main(
     wallet: str = "matchmaker",
 ):
+    init_stake_key(wallet)
+
+def init_stake_key(
+    wallet: str,
+):
     # Get payment address
     _, payment_skey, payment_address = get_signing_info(wallet, network=network)
     _, _, orderbook_address = get_contract("license_check", True, context)

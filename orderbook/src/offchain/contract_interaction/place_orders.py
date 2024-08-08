@@ -55,6 +55,21 @@ def main(
     sell_token: str = "muesli",
     buy_token: str = "swap",
 ):
+    place_orders(
+        name, beneficiary, role, number, sell_amount, buy_amount, sell_token, buy_token
+    )
+
+
+def place_orders(
+    name: str,
+    beneficiary: str,
+    role: int,
+    number: int,
+    sell_amount: int,
+    buy_amount: int,
+    sell_token: str = "muesli",
+    buy_token: str = "swap",
+):
     _, payment_skey, payment_address = get_signing_info(name, network=network)
     _, _, orderbook_v3_address = get_contract("orderbook", True)
 

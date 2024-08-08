@@ -39,6 +39,14 @@ def main(
     amount: int,
     license_expiry: int,
 ):
+    mint_license(name, amount, license_expiry)    
+
+
+def mint_license(
+    name: str,
+    amount: int,
+    license_expiry: int,
+):
     free_minting_contract_script, free_minting_contract_hash, _ = get_contract(
         "free_mint", True, context
     )
